@@ -1,0 +1,9 @@
+BFS
+with time
+no open
+3x4
+Black:
+Red: 11
+1,2,3,4
+5,6,11,7
+9,10,8,_
