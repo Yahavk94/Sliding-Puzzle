@@ -13,7 +13,7 @@ import Utils.Direction;
 public class _02_IDDFS implements Solvable {
 	@Override
 	public Node solve() {
-		Node initial = Node.getInstance();
+		Node initial = Node.initial;
 
 		// All the nodes that are on the current branch
 		Map<String, Integer> avoidLoops = new HashMap<>();

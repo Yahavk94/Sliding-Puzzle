@@ -15,9 +15,9 @@ import Utils.Direction;
 public class _01_BFS implements Solvable {
 	@Override
 	public Node solve() {
-		Queue<Node> queue = new LinkedList<>();
+		Node initial = Node.initial;
 
-		Node initial = Node.getInstance();
+		Queue<Node> queue = new LinkedList<>();
 		queue.add(initial);
 
 		// All the nodes that are available for expansion

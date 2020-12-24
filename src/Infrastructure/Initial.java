@@ -71,6 +71,6 @@ public class Initial {
 	 * This method returns true if the initial state can be solved.
 	 */
 	public static boolean canBeSolved() {
-		return Node.getInstance().getState() != null;
+		return Node.initial.getState() != null;
 	}
 }

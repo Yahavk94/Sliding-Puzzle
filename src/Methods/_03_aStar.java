@@ -16,11 +16,13 @@ import Utils.Direction;
 public class _03_aStar implements Solvable {
 	@Override
 	public Node solve() {
-		Queue<Node> minHeap = new PriorityQueue<>();
+		Node initial = Node.initial;
 
-		Node initial = Node.getInstance();
+		// Set the heuristic value of the initial node
 		initial.setHeuristic(Heuristic.manhattanDistance2D(initial.getState()));
-		minHeap.add(initial);
+
+		Queue<Node> queue = new PriorityQueue<>();
+		queue.add(initial);
 
 		// All the nodes that are available for expansion
 		Map<String, Node> openList = new HashMap<>();
@@ -31,12 +33,12 @@ public class _03_aStar implements Solvable {
 		// All the nodes that have been expanded
 		Map<String, Integer> closedList = new HashMap<>();
 
-		while (!minHeap.isEmpty()) {
+		while (!queue.isEmpty()) {
 			if (Service.WITH_OPEN) /* Display the content of the open list */ {
 				Service.iteration(openList.values().iterator());
 			}
 
-			Node current = minHeap.remove();
+			Node current = queue.remove();
 
 			// Remove the current node from the open list
 			openList.remove(current.getState().hash());
@@ -63,7 +65,7 @@ public class _03_aStar implements Solvable {
 				node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
 
 				if (!openList.containsKey(node.getState().hash())) /* Added safely */ {
-					minHeap.add(node);
+					queue.add(node);
 					openList.put(node.getState().hash(), node);
 					continue;
 				}
@@ -72,8 +74,8 @@ public class _03_aStar implements Solvable {
 				Node similar = openList.get(node.getState().hash());
 				int fn = node.getWeight() + node.getHeuristic();
 				if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
-					minHeap.remove(similar);
-					minHeap.add(node);
+					queue.remove(similar);
+					queue.add(node);
 					openList.replace(node.getState().hash(), node);
 				}
 			}

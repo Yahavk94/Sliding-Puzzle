@@ -20,7 +20,7 @@ import Utils.Direction;
 public class _05_DFBnB implements Solvable {
 	@Override
 	public Node solve() {
-		Node initial = Node.getInstance();
+		Node initial = Node.initial;
 		initial.setMark(false);
 
 		// Limit the threshold
@@ -116,7 +116,7 @@ public class _05_DFBnB implements Solvable {
 		int count = -1;
 		for (int r = 0; r < Dimension.N; r += 1) {
 			for (int c = 0; c < Dimension.M; c += 1) {
-				if (Node.getInstance().getState().getBoard()[r][c].getColor() == Color.BLACK) {
+				if (Node.initial.getState().getBoard()[r][c].getColor() == Color.BLACK) {
 					continue;
 				}
 

@@ -13,19 +13,13 @@ public class Node implements Comparable<Node> {
 	private int heuristic;
 	private boolean mark;
 
+	private static int total;
+
 	private State state;
 	private Direction direction;
 	private String path;
 
-	private static int total;
-	private static final Node instance = new Node(Initial.initFromFile(new State()));
-
-	/**
-	 * This method returns a single instance of the initial node.
-	 */
-	public static Node getInstance() {
-		return instance;
-	}
+	public static final Node initial = new Node(Initial.initFromFile(new State()));
 
 	/**
 	 * This method constructs the initial node.

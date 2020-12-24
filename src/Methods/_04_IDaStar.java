@@ -15,9 +15,9 @@ import Utils.Direction;
 public class _04_IDaStar implements Solvable {
 	@Override
 	public Node solve() {
-		Node initial = Node.getInstance();
+		Node initial = Node.initial;
 
-		// The initial threshold
+		// Initialize the threshold
 		int threshold = Heuristic.manhattanDistance2D(initial.getState());
 
 		Stack<Node> nodes = new Stack<>();
