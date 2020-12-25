@@ -31,9 +31,7 @@ public class State {
 	protected State(State state) {
 		for (int r = 0; r < Dimension.N; r += 1) {
 			for (int c = 0; c < Dimension.M; c += 1) {
-				board[r][c] = new Tile();
-				board[r][c].setData(state.board[r][c].getData());
-				board[r][c].setColor(state.board[r][c].getColor());
+				board[r][c] = new Tile(state.board[r][c].getData(), state.board[r][c].getColor());
 			}
 		}
 

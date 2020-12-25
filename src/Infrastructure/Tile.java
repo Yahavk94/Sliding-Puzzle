@@ -18,6 +18,14 @@ public class Tile {
 	}
 
 	/**
+	 * This method constructs a new tile.
+	 */
+	protected Tile(int data, Color color) {
+		setData(data);
+		setColor(color);
+	}
+
+	/**
 	 * This method returns the data of this tile.
 	 */
 	public int getData() {

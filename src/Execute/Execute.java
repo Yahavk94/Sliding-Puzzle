@@ -2,7 +2,6 @@ package Execute;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import Infrastructure.Initial;
 import Infrastructure.Node;
 import Methods._01_BFS;
 import Methods._02_IDDFS;
@@ -26,7 +25,7 @@ public class Execute {
 		long start = System.currentTimeMillis();
 
 		Node result = null;
-		if (Initial.canBeSolved()) {
+		if (Node.initial.getState() != null) {
 			if (method.equals("BFS")) {
 				result = new _01_BFS().solve();
 			} else if (method.equals("IDDFS")) {
