@@ -11,8 +11,8 @@ The tiles in this puzzle, except for the empty space, are painted in one of thre
 If the color of a certain tile is neither red nor black, it is green by default.
 
 This project offers 5 different search algorithms for solving the puzzle, two of which are categorized under the uninformed search class, while the others are categorized under the informed search class.
-- For the uninformed search algorithms, the goal is to find a sequence of primitive steps, with a **minimal number of moves** that will lead us from the initial state to the goal state.
-- For the informed search algorithms, the goal is to find a sequence of primitive steps, with a **minimal cost of moves** that will lead us from the initial state to the goal state.
+- For the uninformed search algorithms - the goal is to find a sequence of primitive steps, with a **minimal number of moves** that will lead us from the initial state to the goal state.
+- For the informed search algorithms - the goal is to find a sequence of primitive steps, with a **minimal cost of moves** that will lead us from the initial state to the goal state.
 
 ## Installation
 - Fill in the attached input file, according to the given format.
