@@ -4,9 +4,9 @@ The goal is to place the tiles in order, by making sliding moves that use the em
 
 ## Description
 The tiles in this puzzle, except for the empty space, are painted in one of three colors.
-- Green, which indicates a tile with a sliding cost of 1.
-- Red, which indicates a tile with a sliding cost of 30.
-- Black, which indicates a tile that cannot be moved.
+- Green - which indicates a tile with a sliding cost of 1.
+- Red - which indicates a tile with a sliding cost of 30.
+- Black - which indicates a tile that cannot be moved.
 
 If the color of a certain tile is neither red nor black, it is green by default.
 
