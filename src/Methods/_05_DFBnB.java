@@ -68,31 +68,34 @@ public class _05_DFBnB implements Solvable {
 			for (int i = 0; i < storage.size(); i += 1) {
 				Node node = storage.get(i);
 
-				// Encode the state of the stored node
-				String code = node.getState().encode();
-
 				int fn = node.getWeight() + node.getHeuristic();
 				if (fn >= threshold) /* Do not exceed the threshold */ {
 					storage.subList(i, storage.size()).clear();
+					continue;
 				}
 
-				else if (avoidLoops.containsKey(code)) {
+				// Encode the state of the stored node
+				String code = node.getState().encode();
+
+				if (avoidLoops.containsKey(code)) {
 					if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
+						storage.remove(i--);
+						continue;
+					}
+
+					// Not marked as out
+					Node similar = avoidLoops.get(code);
+					if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
+						similar.setMark(true);
+						avoidLoops.remove(code);
+					} else /* The older one is cheaper */ {
 						storage.remove(i--);
 					}
 
-					else /* Not marked as out */ {
-						Node similar = avoidLoops.get(code);
-						if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
-							similar.setMark(true);
-							avoidLoops.remove(code);
-						} else /* The older one is cheaper */ {
-							storage.remove(i--);
-						}
-					}
+					continue;
 				}
 
-				else if (node.getState().isGoal()) /* The goal was found */ {
+				if (node.getState().isGoal()) /* The goal was found */ {
 					threshold = fn;
 					result = node;
 					storage.subList(i, storage.size()).clear();

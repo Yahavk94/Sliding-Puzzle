@@ -5,7 +5,6 @@ import java.util.StringTokenizer;
 import Utils.Color;
 import Utils.Dimension;
 import Utils.Input;
-import Utils.Point;
 
 /**
  * This class initializes the initial state.
@@ -31,7 +30,7 @@ public class Initial {
 				String token = st.nextToken();
 				if (token.equals("_")) {
 					initial.getBoard()[r][c].setColor(Color.NULL);
-					initial.getBlank().setLocation(new Point(r, c));
+					initial.getBlank().setLocation(r, c);
 					continue;
 				}
 

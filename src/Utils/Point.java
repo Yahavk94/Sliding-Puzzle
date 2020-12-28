@@ -39,7 +39,15 @@ public class Point {
 	}
 
 	/**
-	 * This method sets the location of this point.
+	 * This method changes this point to have the specified location.
+	 */
+	public void setLocation(int r, int c) {
+		this.r = r;
+		this.c = c;
+	}
+
+	/**
+	 * This method sets the location of this point to the specified location.
 	 */
 	public void setLocation(Point point) {
 		r = point.r;

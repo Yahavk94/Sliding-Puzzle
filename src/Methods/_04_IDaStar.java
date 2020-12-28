@@ -50,9 +50,6 @@ public class _04_IDaStar implements Solvable {
 						continue;
 					}
 
-					// Encode the state of the generated node
-					String code = node.getState().encode();
-
 					// Set the heuristic value of the generated node
 					node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
 
@@ -64,6 +61,9 @@ public class _04_IDaStar implements Solvable {
 
 						continue;
 					}
+
+					// Encode the state of the generated node
+					String code = node.getState().encode();
 
 					if (avoidLoops.containsKey(code)) {
 						if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
