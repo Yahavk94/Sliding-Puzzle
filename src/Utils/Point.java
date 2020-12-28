@@ -41,8 +41,8 @@ public class Point {
 	/**
 	 * This method sets the location of this point.
 	 */
-	public void setLocation(Point other) {
-		r = other.r;
-		c = other.c;
+	public void setLocation(Point point) {
+		r = point.r;
+		c = point.c;
 	}
 }

@@ -31,7 +31,7 @@ public class _05_DFBnB implements Solvable {
 
 		// All the nodes that are currently in the stack
 		Map<String, Node> avoidLoops = new HashMap<>();
-		avoidLoops.put(initial.getState().hash(), initial);
+		avoidLoops.put(initial.getState().encode(), initial);
 
 		Node result = null;
 
@@ -39,7 +39,7 @@ public class _05_DFBnB implements Solvable {
 			Node current = nodes.pop();
 
 			if (current.isMarked()) /* Marked as out */ {
-				avoidLoops.remove(current.getState().hash());
+				avoidLoops.remove(current.getState().encode());
 				continue;
 			}
 
@@ -68,21 +68,24 @@ public class _05_DFBnB implements Solvable {
 			for (int i = 0; i < storage.size(); i += 1) {
 				Node node = storage.get(i);
 
+				// Encode the state of the stored node
+				String code = node.getState().encode();
+
 				int fn = node.getWeight() + node.getHeuristic();
 				if (fn >= threshold) /* Do not exceed the threshold */ {
 					storage.subList(i, storage.size()).clear();
 				}
 
-				else if (avoidLoops.containsKey(node.getState().hash())) {
-					if (avoidLoops.get(node.getState().hash()).isMarked()) /* Marked as out */ {
+				else if (avoidLoops.containsKey(code)) {
+					if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
 						storage.remove(i--);
 					}
 
 					else /* Not marked as out */ {
-						Node similar = avoidLoops.get(node.getState().hash());
+						Node similar = avoidLoops.get(code);
 						if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
 							similar.setMark(true);
-							avoidLoops.remove(similar.getState().hash());
+							avoidLoops.remove(code);
 						} else /* The older one is cheaper */ {
 							storage.remove(i--);
 						}
@@ -102,7 +105,7 @@ public class _05_DFBnB implements Solvable {
 			while (!storage.isEmpty()) /* Insert into the stack in descending order */ {
 				Node node = storage.remove(0);
 				nodes.push(node);
-				avoidLoops.put(node.getState().hash(), node);
+				avoidLoops.put(node.getState().encode(), node);
 			}
 		}
 

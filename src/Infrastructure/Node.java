@@ -7,7 +7,7 @@ import Utils.Direction;
  */
 
 public class Node implements Comparable<Node> {
-	public final int key = total++;
+	private final int key = total++;
 
 	private int weight;
 	private int heuristic;

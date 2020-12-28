@@ -1,6 +1,6 @@
 package Methods;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import Infrastructure.Node;
 import Tools.Service;
 import Utils.Direction;
@@ -16,8 +16,8 @@ public class _02_IDDFS implements Solvable {
 		Node initial = Node.initial;
 
 		// All the nodes that are on the current branch
-		Map<String, Integer> avoidLoops = new HashMap<>();
-		avoidLoops.put(initial.getState().hash(), initial.key);
+		Set<String> avoidLoops = new HashSet<>();
+		avoidLoops.add(initial.getState().encode());
 
 		for (int i = 1; i < Integer.MAX_VALUE; i += 1) {
 			Node result = limitedDFS(initial, i, avoidLoops);
@@ -32,7 +32,7 @@ public class _02_IDDFS implements Solvable {
 	/**
 	 * This method implements Limited Depth First Search algorithm.
 	 */
-	private Node limitedDFS(Node current, int depth, Map<String, Integer> avoidLoops) {
+	private Node limitedDFS(Node current, int depth, Set<String> avoidLoops) {
 		if (current.getState().isGoal()) /* The goal was found */ {
 			return current;
 		}
@@ -47,13 +47,16 @@ public class _02_IDDFS implements Solvable {
 				continue;
 			}
 
+			// Encode the state of the generated node
+			String code = node.getState().encode();
+
 			// A Loop has been detected
-			if (avoidLoops.containsKey(node.getState().hash())) {
+			if (avoidLoops.contains(code)) {
 				continue;
 			}
 
 			// Save the current potential path
-			avoidLoops.put(node.getState().hash(), node.key);
+			avoidLoops.add(code);
 
 			// Recurse
 			Node result = limitedDFS(node, depth - 1, avoidLoops);
@@ -62,8 +65,8 @@ public class _02_IDDFS implements Solvable {
 				return result;
 			}
 
-			// Remove traces 
-			avoidLoops.remove(node.getState().hash());
+			// Remove traces
+			avoidLoops.remove(code);
 		}
 
 		return null;

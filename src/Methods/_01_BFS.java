@@ -1,8 +1,10 @@
 package Methods;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import Infrastructure.Node;
 import Tools.Service;
 import Utils.Direction;
@@ -24,10 +26,10 @@ public class _01_BFS implements Solvable {
 		Map<String, Node> openList = new HashMap<>();
 
 		// The initial node is available for expansion
-		openList.put(initial.getState().hash(), initial);
+		openList.put(initial.getState().encode(), initial);
 
 		// All the nodes that have been expanded
-		Map<String, Integer> closedList = new HashMap<>();
+		Set<String> closedList = new HashSet<>();
 
 		while (!queue.isEmpty()) {
 			if (Service.WITH_OPEN) /* Display the content of the open list */ {
@@ -36,9 +38,12 @@ public class _01_BFS implements Solvable {
 
 			Node current = queue.remove();
 
+			// Encode the state of the current node
+			String code = current.getState().encode();
+
 			// Move the current node from the open list to the closed list
-			openList.remove(current.getState().hash());
-			closedList.put(current.getState().hash(), current.key);
+			openList.remove(code);
+			closedList.add(code);
 
 			for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
 				Node node = Service.expand(current, Direction.convert(i));
@@ -46,13 +51,16 @@ public class _01_BFS implements Solvable {
 					continue;
 				}
 
+				// Encode the state of the generated node
+				code = node.getState().encode();
+
 				// The generated node has already been expanded
-				if (closedList.containsKey(node.getState().hash())) {
+				if (closedList.contains(code)) {
 					continue;
 				}
 
 				// The generated node is already available for expansion
-				if (openList.containsKey(node.getState().hash())) {
+				if (openList.containsKey(code)) {
 					continue;
 				}
 
@@ -62,7 +70,7 @@ public class _01_BFS implements Solvable {
 
 				// The generated node is available for expansion
 				queue.add(node);
-				openList.put(node.getState().hash(), node);
+				openList.put(code, node);
 			}
 		}
 

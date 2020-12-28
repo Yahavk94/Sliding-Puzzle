@@ -55,15 +55,15 @@ public class State {
 	/**
 	 * This method generates an injective hash function.
 	 */
-	public String hash() {
-		String function = "";
+	public String encode() {
+		String code = "";
 		for (int r = 0; r < Dimension.N; r += 1) {
 			for (int c = 0; c < Dimension.M; c += 1) {
-				function += board[r][c].getData() + " ";
+				code += board[r][c].getData() + " ";
 			}
 		}
 
-		return function;
+		return code;
 	}
 
 	/**

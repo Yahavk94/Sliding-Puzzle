@@ -1,8 +1,10 @@
 package Methods;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import Infrastructure.Node;
 import Tools.Heuristic;
 import Tools.Service;
@@ -28,10 +30,10 @@ public class _03_aStar implements Solvable {
 		Map<String, Node> openList = new HashMap<>();
 
 		// The initial node is available for expansion
-		openList.put(initial.getState().hash(), initial);
+		openList.put(initial.getState().encode(), initial);
 
 		// All the nodes that have been expanded
-		Map<String, Integer> closedList = new HashMap<>();
+		Set<String> closedList = new HashSet<>();
 
 		while (!queue.isEmpty()) {
 			if (Service.WITH_OPEN) /* Display the content of the open list */ {
@@ -40,15 +42,18 @@ public class _03_aStar implements Solvable {
 
 			Node current = queue.remove();
 
+			// Encode the state of the current node
+			String code = current.getState().encode();
+
 			// Remove the current node from the open list
-			openList.remove(current.getState().hash());
+			openList.remove(code);
 
 			if (current.getState().isGoal()) /* The goal was found */ {
 				return current;
 			}
 
 			// Add the current node to the closed list
-			closedList.put(current.getState().hash(), current.key);
+			closedList.add(code);
 
 			for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
 				Node node = Service.expand(current, Direction.convert(i));
@@ -56,27 +61,30 @@ public class _03_aStar implements Solvable {
 					continue;
 				}
 
+				// Encode the state of the generated node
+				code = node.getState().encode();
+
 				// The generated node has already been expanded
-				if (closedList.containsKey(node.getState().hash())) {
+				if (closedList.contains(code)) {
 					continue;
 				}
 
 				// Set the heuristic value of the generated node
 				node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
 
-				if (!openList.containsKey(node.getState().hash())) /* Added safely */ {
+				if (!openList.containsKey(code)) /* Added safely */ {
 					queue.add(node);
-					openList.put(node.getState().hash(), node);
+					openList.put(code, node);
 					continue;
 				}
 
 				// Check if there is a cheaper path
-				Node similar = openList.get(node.getState().hash());
+				Node similar = openList.get(code);
 				int fn = node.getWeight() + node.getHeuristic();
 				if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
 					queue.remove(similar);
 					queue.add(node);
-					openList.replace(node.getState().hash(), node);
+					openList.replace(code, node);
 				}
 			}
 		}

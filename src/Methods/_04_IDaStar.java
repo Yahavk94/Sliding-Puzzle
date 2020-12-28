@@ -28,7 +28,7 @@ public class _04_IDaStar implements Solvable {
 		while (threshold != Integer.MAX_VALUE) {
 			initial.setMark(false);
 			nodes.push(initial);
-			avoidLoops.put(initial.getState().hash(), initial);
+			avoidLoops.put(initial.getState().encode(), initial);
 
 			// Should be set to a strict upper bound
 			int minF = Integer.MAX_VALUE;
@@ -37,7 +37,7 @@ public class _04_IDaStar implements Solvable {
 				Node current = nodes.pop();
 
 				if (current.isMarked()) /* Marked as out */ {
-					avoidLoops.remove(current.getState().hash());
+					avoidLoops.remove(current.getState().encode());
 					continue;
 				}
 
@@ -49,6 +49,9 @@ public class _04_IDaStar implements Solvable {
 					if (node == null) /* Unsafe expansion */ {
 						continue;
 					}
+
+					// Encode the state of the generated node
+					String code = node.getState().encode();
 
 					// Set the heuristic value of the generated node
 					node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
@@ -62,16 +65,16 @@ public class _04_IDaStar implements Solvable {
 						continue;
 					}
 
-					if (avoidLoops.containsKey(node.getState().hash())) {
-						if (avoidLoops.get(node.getState().hash()).isMarked()) /* Marked as out */ {
+					if (avoidLoops.containsKey(code)) {
+						if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
 							continue;
 						}
 
 						// Not marked as out
-						Node similar = avoidLoops.get(node.getState().hash());
+						Node similar = avoidLoops.get(code);
 						if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
 							similar.setMark(true);
-							avoidLoops.remove(similar.getState().hash());
+							avoidLoops.remove(code);
 						} else /* The older one is cheaper */ {
 							continue;
 						}
@@ -82,7 +85,7 @@ public class _04_IDaStar implements Solvable {
 					}
 
 					nodes.push(node);
-					avoidLoops.put(node.getState().hash(), node);
+					avoidLoops.put(code, node);
 				}
 			}
 
