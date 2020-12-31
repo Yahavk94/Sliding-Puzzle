@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 import Utils.Color;
 import Utils.Dimension;
 import Utils.Input;
+import Utils.Point;
 
 /**
  * This class initializes the initial state.
@@ -12,7 +13,7 @@ import Utils.Input;
  */
 
 public class Initial {
-	protected static State initFromFile(State initial) {
+	protected static void initFromFile(State initial) {
 		Map<Integer, Color> br = new HashMap<>();
 		StringTokenizer st = new StringTokenizer(Input.instance.remove(1).substring(6), " ,");
 		while (st.hasMoreTokens()) {
@@ -29,29 +30,28 @@ public class Initial {
 			for (int c = 0; c < Dimension.M; c += 1) {
 				String token = st.nextToken();
 				if (token.equals("_")) {
-					initial.getBoard()[r][c].setColor(Color.NULL);
-					initial.getBlank().setLocation(r, c);
+					initial.board[r][c] = new Tile();
+					initial.blank = new Point(r, c);
 					continue;
 				}
 
 				int data = Integer.parseInt(token);
-				initial.getBoard()[r][c].setData(data);
 
 				if (!br.containsKey(data)) {
+					initial.board[r][c] = new Tile(data, Color.GREEN);
 					continue;
 				}
 
 				Color color = br.get(data);
 				if (color == Color.BLACK) {
 					if (data != r * Dimension.M + c + 1) /* Unsolvable */ {
-						return null;
+						initial.board = null;
+						return;
 					}
 				}
 
-				initial.getBoard()[r][c].setColor(color);
+				initial.board[r][c] = new Tile(data, color);
 			}
 		}
-
-		return initial;
 	}
 }

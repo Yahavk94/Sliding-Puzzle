@@ -12,10 +12,10 @@ import Utils.Point;
  */
 
 public class Heuristic {
-	private static final Map<Integer, Point> map = initMap(new HashMap<>());
+	private static final Map<Integer, Point> map = generateMap();
 
 	/**
-	 * This method computes and returns the heuristic evaluation of the given state.
+	 * This method computes and returns the heuristic evaluation of the specified state.
 	 */
 	public static int manhattanDistance2D(State state) {
 		int manhattan = 0;
@@ -39,7 +39,8 @@ public class Heuristic {
 	/**
 	 * This method returns a mapping of each tile to its location in the goal state.
 	 */
-	private static Map<Integer, Point> initMap(Map<Integer, Point> map) {
+	private static Map<Integer, Point> generateMap() {
+		Map<Integer, Point> map = new HashMap<>();
 		for (int r = 0; r < Dimension.N; r += 1) {
 			for (int c = 0; c < Dimension.M; c += 1) {
 				if (r * Dimension.M + c + 1 != Dimension.NM) {

@@ -9,20 +9,14 @@ import Utils.Point;
  */
 
 public class State {
-	private Tile board[][] = new Tile[Dimension.N][Dimension.M];
-	private Point blank;
+	protected Tile board[][] = new Tile[Dimension.N][Dimension.M];
+	protected Point blank;
 
 	/**
 	 * This method constructs a new state.
 	 */
 	protected State() {
-		for (int r = 0; r < Dimension.N; r += 1) {
-			for (int c = 0; c < Dimension.M; c += 1) {
-				board[r][c] = new Tile();
-			}
-		}
-
-		blank = new Point();
+		Initial.initFromFile(this);
 	}
 
 	/**

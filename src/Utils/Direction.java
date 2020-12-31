@@ -9,7 +9,7 @@ public enum Direction {
 	L, U, R, D;
 
 	/**
-	 * This method converts the given integer to the corresponding direction.
+	 * This method converts the specified integer to the corresponding direction.
 	 */
 	public static Direction convert(int direction) throws RuntimeException {
 		if (direction == 0) {

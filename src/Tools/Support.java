@@ -15,7 +15,7 @@ public class Support {
 	 * This method updates the generated node.
 	 */
 	protected static Node update(Node node) {
-		Point b = node.getState().getBlank();
+		Point b = node.getBlank();
 
 		Point s;
 		if (node.getDirection() == Direction.L) {
@@ -28,7 +28,7 @@ public class Support {
 			s = new Point(b.getRow() - 1, b.getCol());
 		}
 
-		Tile temp = node.getState().getBoard()[s.getRow()][s.getCol()];
+		Tile temp = node.getBoard()[s.getRow()][s.getCol()];
 		node.setWeight(node.getWeight() + Color.cost(temp.getColor()));
 		if (node.getPath() == null) {
 			node.setPath(temp.getData() + "" + node.getDirection());
@@ -36,8 +36,8 @@ public class Support {
 			node.setPath(node.getPath() + "-" + temp.getData() + node.getDirection());
 		}
 
-		node.getState().getBoard()[s.getRow()][s.getCol()] = node.getState().getBoard()[b.getRow()][b.getCol()];
-		node.getState().getBoard()[b.getRow()][b.getCol()] = temp;
+		node.getBoard()[s.getRow()][s.getCol()] = node.getBoard()[b.getRow()][b.getCol()];
+		node.getBoard()[b.getRow()][b.getCol()] = temp;
 		b.setLocation(s);
 
 		return node;

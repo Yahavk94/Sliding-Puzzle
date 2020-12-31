@@ -6,7 +6,7 @@ import Utils.Direction;
  * @author Yahav Karpel
  */
 
-public class Node implements Comparable<Node> {
+public class Node extends State implements Comparable<Node> {
 	private final int key = total++;
 
 	private int weight;
@@ -15,27 +15,24 @@ public class Node implements Comparable<Node> {
 
 	private static int total;
 
-	private State state;
 	private Direction direction;
 	private String path;
 
-	public static final Node initial = new Node(Initial.initFromFile(new State()));
+	public static final Node initial = new Node();
 
 	/**
 	 * This method constructs the initial node.
 	 */
-	private Node(State initial) {
-		if (initial != null) {
-			state = new State(initial);
-		}
+	private Node() {
+		super();
 	}
 
 	/**
 	 * This method constructs a new node.
 	 */
 	public Node(Node current, Direction direction) {
+		super(current);
 		setWeight(current.weight);
-		state = new State(current.state);
 		setDirection(direction);
 		setPath(current.path);
 	}
@@ -80,13 +77,6 @@ public class Node implements Comparable<Node> {
 	 */
 	public void setMark(boolean mark) {
 		this.mark = mark;
-	}
-
-	/**
-	 * This method returns the state of this node.
-	 */
-	public State getState() {
-		return state;
 	}
 
 	/**

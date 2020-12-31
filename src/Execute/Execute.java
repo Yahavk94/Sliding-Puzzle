@@ -3,11 +3,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import Infrastructure.Node;
-import Methods._01_BFS;
-import Methods._02_IDDFS;
-import Methods._03_aStar;
-import Methods._04_IDaStar;
-import Methods._05_DFBnB;
+import Methods.BFS;
+import Methods.DFBnB;
+import Methods.IDDFS;
+import Methods.IDaStar;
+import Methods.aStar;
 import Utils.Input;
 
 /**
@@ -25,17 +25,17 @@ public class Execute {
 		long start = System.currentTimeMillis();
 
 		Node result = null;
-		if (Node.initial.getState() != null) {
+		if (Node.initial.getBoard() != null) {
 			if (method.equals("BFS")) {
-				result = new _01_BFS().solve();
+				result = new BFS().solve(Node.initial);
 			} else if (method.equals("IDDFS")) {
-				result = new _02_IDDFS().solve();
+				result = new IDDFS().solve(Node.initial);
 			} else if (method.equals("A*")) {
-				result = new _03_aStar().solve();
+				result = new aStar().solve(Node.initial);
 			} else if (method.equals("IDA*")) {
-				result = new _04_IDaStar().solve();
+				result = new IDaStar().solve(Node.initial);
 			} else if (method.equals("DFBnB")) {
-				result = new _05_DFBnB().solve();
+				result = new DFBnB().solve(Node.initial);
 			}
 		}
 

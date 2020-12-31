@@ -2,7 +2,7 @@ package Utils;
 import java.util.StringTokenizer;
 
 /**
- * This class represents the dimension of the puzzle.
+ * This class represents the dimension of the board.
  * @author Yahav Karpel
  */
 

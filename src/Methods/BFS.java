@@ -14,11 +14,9 @@ import Utils.Direction;
  * @author Yahav Karpel
  */
 
-public class _01_BFS implements Solvable {
+public class BFS implements Solvable {
 	@Override
-	public Node solve() {
-		Node initial = Node.initial;
-
+	public Node solve(Node initial) {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(initial);
 
@@ -26,7 +24,7 @@ public class _01_BFS implements Solvable {
 		Map<String, Node> openList = new HashMap<>();
 
 		// The initial node is available for expansion
-		openList.put(initial.getState().encode(), initial);
+		openList.put(initial.encode(), initial);
 
 		// All the nodes that have been expanded
 		Set<String> closedList = new HashSet<>();
@@ -38,8 +36,8 @@ public class _01_BFS implements Solvable {
 
 			Node current = queue.remove();
 
-			// Encode the state of the current node
-			String code = current.getState().encode();
+			// Encode the current node
+			String code = current.encode();
 
 			// Move the current node from the open list to the closed list
 			openList.remove(code);
@@ -51,8 +49,8 @@ public class _01_BFS implements Solvable {
 					continue;
 				}
 
-				// Encode the state of the generated node
-				code = node.getState().encode();
+				// Encode the generated node
+				code = node.encode();
 
 				// The generated node has already been expanded
 				if (closedList.contains(code)) {
@@ -64,7 +62,7 @@ public class _01_BFS implements Solvable {
 					continue;
 				}
 
-				if (node.getState().isGoal()) /* The goal was found */ {
+				if (node.isGoal()) /* The goal was found */ {
 					return node;
 				}
 

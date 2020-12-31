@@ -9,7 +9,7 @@ public enum Color {
 	GREEN, RED, BLACK, NULL;
 
 	/**
-	 * This method converts the given color to the corresponding cost.
+	 * This method converts the specified color to the corresponding cost.
 	 */
 	public static int cost(Color color) throws RuntimeException {
 		if (color == GREEN) {

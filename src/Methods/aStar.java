@@ -15,22 +15,18 @@ import Utils.Direction;
  * @author Yahav Karpel
  */
 
-public class _03_aStar implements Solvable {
+public class aStar implements Solvable {
 	@Override
-	public Node solve() {
-		Node initial = Node.initial;
-
-		// Set the heuristic value of the initial node
-		initial.setHeuristic(Heuristic.manhattanDistance2D(initial.getState()));
-
+	public Node solve(Node initial) {
 		Queue<Node> queue = new PriorityQueue<>();
+		initial.setHeuristic(Heuristic.manhattanDistance2D(initial));
 		queue.add(initial);
 
 		// All the nodes that are available for expansion
 		Map<String, Node> openList = new HashMap<>();
 
 		// The initial node is available for expansion
-		openList.put(initial.getState().encode(), initial);
+		openList.put(initial.encode(), initial);
 
 		// All the nodes that have been expanded
 		Set<String> closedList = new HashSet<>();
@@ -42,13 +38,13 @@ public class _03_aStar implements Solvable {
 
 			Node current = queue.remove();
 
-			// Encode the state of the current node
-			String code = current.getState().encode();
+			// Encode the current node
+			String code = current.encode();
 
 			// Remove the current node from the open list
 			openList.remove(code);
 
-			if (current.getState().isGoal()) /* The goal was found */ {
+			if (current.isGoal()) /* The goal was found */ {
 				return current;
 			}
 
@@ -61,8 +57,8 @@ public class _03_aStar implements Solvable {
 					continue;
 				}
 
-				// Encode the state of the generated node
-				code = node.getState().encode();
+				// Encode the generated node
+				code = node.encode();
 
 				// The generated node has already been expanded
 				if (closedList.contains(code)) {
@@ -70,7 +66,7 @@ public class _03_aStar implements Solvable {
 				}
 
 				// Set the heuristic value of the generated node
-				node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
+				node.setHeuristic(Heuristic.manhattanDistance2D(node));
 
 				if (!openList.containsKey(code)) /* Added safely */ {
 					queue.add(node);

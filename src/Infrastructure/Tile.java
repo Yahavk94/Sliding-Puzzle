@@ -11,18 +11,18 @@ public class Tile {
 	private Color color;
 
 	/**
-	 * This method constructs a new green tile.
+	 * This method constructs a new tile.
 	 */
 	protected Tile() {
-		setColor(Color.GREEN);
+		color = Color.NULL;
 	}
 
 	/**
 	 * This method constructs a new tile.
 	 */
 	protected Tile(int data, Color color) {
-		setData(data);
-		setColor(color);
+		this.data = data;
+		this.color = color;
 	}
 
 	/**
@@ -33,23 +33,9 @@ public class Tile {
 	}
 
 	/**
-	 * This method sets the data of this tile.
-	 */
-	protected void setData(int data) {
-		this.data = data;
-	}
-
-	/**
 	 * This method returns the color of this tile.
 	 */
 	public Color getColor() {
 		return color;
-	}
-
-	/**
-	 * This method sets the color of this tile.
-	 */
-	protected void setColor(Color color) {
-		this.color = color;
 	}
 }

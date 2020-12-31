@@ -17,21 +17,19 @@ import Utils.Direction;
  * @author Yahav Karpel
  */
 
-public class _05_DFBnB implements Solvable {
+public class DFBnB implements Solvable {
 	@Override
-	public Node solve() {
-		Node initial = Node.initial;
+	public Node solve(Node initial) {
+		Stack<Node> nodes = new Stack<>();
 		initial.setMark(false);
+		nodes.push(initial);
 
 		// Limit the threshold
 		int threshold = thresholdDFBnB();
 
-		Stack<Node> nodes = new Stack<>();
-		nodes.push(initial);
-
 		// All the nodes that are currently in the stack
 		Map<String, Node> avoidLoops = new HashMap<>();
-		avoidLoops.put(initial.getState().encode(), initial);
+		avoidLoops.put(initial.encode(), initial);
 
 		Node result = null;
 
@@ -39,7 +37,7 @@ public class _05_DFBnB implements Solvable {
 			Node current = nodes.pop();
 
 			if (current.isMarked()) /* Marked as out */ {
-				avoidLoops.remove(current.getState().encode());
+				avoidLoops.remove(current.encode());
 				continue;
 			}
 
@@ -56,7 +54,7 @@ public class _05_DFBnB implements Solvable {
 				}
 
 				// Set the heuristic value of the generated node
-				node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
+				node.setHeuristic(Heuristic.manhattanDistance2D(node));
 
 				// Store the generated node
 				storage.add(node);
@@ -74,41 +72,37 @@ public class _05_DFBnB implements Solvable {
 					continue;
 				}
 
-				// Encode the state of the stored node
-				String code = node.getState().encode();
+				// Encode the stored node
+				String code = node.encode();
 
 				if (avoidLoops.containsKey(code)) {
 					if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
 						storage.remove(i--);
-						continue;
-					}
-
-					// Not marked as out
-					Node similar = avoidLoops.get(code);
-					if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
-						similar.setMark(true);
-						avoidLoops.remove(code);
-					} else /* The older one is cheaper */ {
-						storage.remove(i--);
+					} else /* Not marked as out */ {
+						Node similar = avoidLoops.get(code);
+						if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
+							similar.setMark(true);
+							avoidLoops.remove(code);
+						} else /* The older one is cheaper */ {
+							storage.remove(i--);
+						}
 					}
 
 					continue;
 				}
 
-				if (node.getState().isGoal()) /* The goal was found */ {
+				if (node.isGoal()) /* The goal was found */ {
 					threshold = fn;
 					result = node;
 					storage.subList(i, storage.size()).clear();
 				}
 			}
 
-			// Sort the remaining nodes in descending order
 			Collections.reverse(storage);
-
 			while (!storage.isEmpty()) /* Insert into the stack in descending order */ {
 				Node node = storage.remove(0);
 				nodes.push(node);
-				avoidLoops.put(node.getState().encode(), node);
+				avoidLoops.put(node.encode(), node);
 			}
 		}
 
@@ -122,7 +116,7 @@ public class _05_DFBnB implements Solvable {
 		int count = -1;
 		for (int r = 0; r < Dimension.N; r += 1) {
 			for (int c = 0; c < Dimension.M; c += 1) {
-				if (Node.initial.getState().getBoard()[r][c].getColor() == Color.BLACK) {
+				if (Node.initial.getBoard()[r][c].getColor() == Color.BLACK) {
 					continue;
 				}
 

@@ -12,23 +12,21 @@ import Utils.Direction;
  * @author Yahav Karpel
  */
 
-public class _04_IDaStar implements Solvable {
+public class IDaStar implements Solvable {
 	@Override
-	public Node solve() {
-		Node initial = Node.initial;
-
-		// Initialize the threshold
-		int threshold = Heuristic.manhattanDistance2D(initial.getState());
-
+	public Node solve(Node initial) {
 		Stack<Node> nodes = new Stack<>();
 
 		// All the nodes that are currently in the stack
 		Map<String, Node> avoidLoops = new HashMap<>();
 
+		// Initialize the threshold
+		int threshold = Heuristic.manhattanDistance2D(initial);
+
 		while (threshold != Integer.MAX_VALUE) {
 			initial.setMark(false);
 			nodes.push(initial);
-			avoidLoops.put(initial.getState().encode(), initial);
+			avoidLoops.put(initial.encode(), initial);
 
 			// Should be set to a strict upper bound
 			int minF = Integer.MAX_VALUE;
@@ -37,7 +35,7 @@ public class _04_IDaStar implements Solvable {
 				Node current = nodes.pop();
 
 				if (current.isMarked()) /* Marked as out */ {
-					avoidLoops.remove(current.getState().encode());
+					avoidLoops.remove(current.encode());
 					continue;
 				}
 
@@ -51,7 +49,7 @@ public class _04_IDaStar implements Solvable {
 					}
 
 					// Set the heuristic value of the generated node
-					node.setHeuristic(Heuristic.manhattanDistance2D(node.getState()));
+					node.setHeuristic(Heuristic.manhattanDistance2D(node));
 
 					int fn = node.getWeight() + node.getHeuristic();
 					if (fn > threshold) /* Do not exceed the current threshold */ {
@@ -62,25 +60,24 @@ public class _04_IDaStar implements Solvable {
 						continue;
 					}
 
-					// Encode the state of the generated node
-					String code = node.getState().encode();
+					// Encode the generated node
+					String code = node.encode();
 
 					if (avoidLoops.containsKey(code)) {
 						if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
 							continue;
-						}
-
-						// Not marked as out
-						Node similar = avoidLoops.get(code);
-						if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
-							similar.setMark(true);
-							avoidLoops.remove(code);
-						} else /* The older one is cheaper */ {
-							continue;
+						} else /* Not marked as out */ {
+							Node similar = avoidLoops.get(code);
+							if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
+								similar.setMark(true);
+								avoidLoops.remove(code);
+							} else /* The older one is cheaper */ {
+								continue;
+							}
 						}
 					}
 
-					if (node.getState().isGoal()) /* The goal was found */ {
+					if (node.isGoal()) /* The goal was found */ {
 						return node;
 					}
 
