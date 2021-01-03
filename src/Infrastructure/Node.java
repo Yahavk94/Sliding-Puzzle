@@ -1,4 +1,5 @@
 package Infrastructure;
+import Utils.Color;
 import Utils.Direction;
 
 /**
@@ -7,7 +8,7 @@ import Utils.Direction;
  */
 
 public class Node extends State implements Comparable<Node> {
-	private final int key = total++;
+	private final int ID = total++;
 
 	private int weight;
 	private int heuristic;
@@ -18,13 +19,14 @@ public class Node extends State implements Comparable<Node> {
 	private Direction direction;
 	private String path;
 
-	public static final Node initial = new Node();
+	public static final Node INITIAL = new Node();
 
 	/**
 	 * This method constructs the initial node.
 	 */
 	private Node() {
 		super();
+		initPath();
 	}
 
 	/**
@@ -32,9 +34,9 @@ public class Node extends State implements Comparable<Node> {
 	 */
 	public Node(Node current, Direction direction) {
 		super(current);
-		setWeight(current.weight);
+		weight = current.weight;
 		setDirection(direction);
-		setPath(current.path);
+		path = current.path;
 	}
 
 	/**
@@ -45,10 +47,10 @@ public class Node extends State implements Comparable<Node> {
 	}
 
 	/**
-	 * This method sets the weight of this node.
+	 * This method updates the weight of this node by adding the cost of the specified color.
 	 */
-	public void setWeight(int weight) {
-		this.weight = weight;
+	public void updateWeight(Color color) {
+		weight += Color.cost(color);
 	}
 
 	/**
@@ -94,17 +96,24 @@ public class Node extends State implements Comparable<Node> {
 	}
 
 	/**
-	 * This method returns the sequence of actions that led to this node.
+	 * This method initializes the path to this node.
+	 */
+	private void initPath() {
+		path = "";
+	}
+
+	/**
+	 * This method returns the path to this node.
 	 */
 	public String getPath() {
 		return path;
 	}
 
 	/**
-	 * This method sets the sequence of actions that led to this node.
+	 * This method updates the path to this node by adding the specified action.
 	 */
-	public void setPath(String path) {
-		this.path = path;
+	public void updatePath(String action) {
+		path += action;
 	}
 
 	/**
@@ -120,7 +129,7 @@ public class Node extends State implements Comparable<Node> {
 	@Override
 	public int compareTo(Node node) {
 		if (weight + heuristic == node.weight + node.heuristic) {
-			if (key > node.key) {
+			if (ID > node.ID) {
 				return 1;
 			}
 		}

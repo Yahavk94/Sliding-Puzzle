@@ -25,17 +25,17 @@ public class Execute {
 		long start = System.currentTimeMillis();
 
 		Node result = null;
-		if (Node.initial.getBoard() != null) {
+		if (Node.INITIAL.getBoard() != null) {
 			if (method.equals("BFS")) {
-				result = new BFS().solve(Node.initial);
+				result = new BFS().solve();
 			} else if (method.equals("IDDFS")) {
-				result = new IDDFS().solve(Node.initial);
+				result = new IDDFS().solve();
 			} else if (method.equals("A*")) {
-				result = new aStar().solve(Node.initial);
+				result = new aStar().solve();
 			} else if (method.equals("IDA*")) {
-				result = new IDaStar().solve(Node.initial);
+				result = new IDaStar().solve();
 			} else if (method.equals("DFBnB")) {
-				result = new DFBnB().solve(Node.initial);
+				result = new DFBnB().solve();
 			}
 		}
 

@@ -14,19 +14,19 @@ import Utils.Direction;
 
 public class IDaStar implements Solvable {
 	@Override
-	public Node solve(Node initial) {
+	public Node solve() {
 		Stack<Node> nodes = new Stack<>();
 
 		// All the nodes that are currently in the stack
 		Map<String, Node> avoidLoops = new HashMap<>();
 
 		// Initialize the threshold
-		int threshold = Heuristic.manhattanDistance2D(initial);
+		int threshold = Heuristic.manhattanDistance2D(Node.INITIAL);
 
 		while (threshold != Integer.MAX_VALUE) {
-			initial.setMark(false);
-			nodes.push(initial);
-			avoidLoops.put(initial.encode(), initial);
+			Node.INITIAL.setMark(false);
+			nodes.push(Node.INITIAL);
+			avoidLoops.put(Node.INITIAL.encode(), Node.INITIAL);
 
 			// Should be set to a strict upper bound
 			int minF = Integer.MAX_VALUE;

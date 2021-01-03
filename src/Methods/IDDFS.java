@@ -13,9 +13,9 @@ import Utils.Direction;
 
 public class IDDFS implements Solvable {
 	@Override
-	public Node solve(Node initial) {
+	public Node solve() {
 		for (int i = 1; i < Integer.MAX_VALUE; i += 1) {
-			Object result = limitedDFS(initial, i, new HashSet<>());
+			Object result = limitedDFS(Node.INITIAL, i, new HashSet<>());
 			if (result != Result.CUTOFF) {
 				if (result != Result.FAIL) /* The goal was found */ {
 					return (Node)result;

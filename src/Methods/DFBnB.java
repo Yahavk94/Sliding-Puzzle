@@ -8,8 +8,6 @@ import java.util.Stack;
 import Infrastructure.Node;
 import Tools.Heuristic;
 import Tools.Service;
-import Utils.Color;
-import Utils.Dimension;
 import Utils.Direction;
 
 /**
@@ -19,17 +17,17 @@ import Utils.Direction;
 
 public class DFBnB implements Solvable {
 	@Override
-	public Node solve(Node initial) {
+	public Node solve() {
 		Stack<Node> nodes = new Stack<>();
-		initial.setMark(false);
-		nodes.push(initial);
-
-		// Limit the threshold
-		int threshold = thresholdDFBnB();
+		Node.INITIAL.setMark(false);
+		nodes.push(Node.INITIAL);
 
 		// All the nodes that are currently in the stack
 		Map<String, Node> avoidLoops = new HashMap<>();
-		avoidLoops.put(initial.encode(), initial);
+		avoidLoops.put(Node.INITIAL.encode(), Node.INITIAL);
+
+		// Should be set to a strict upper bound
+		int threshold = Integer.MAX_VALUE;
 
 		Node result = null;
 
@@ -107,32 +105,5 @@ public class DFBnB implements Solvable {
 		}
 
 		return result;
-	}
-
-	/**
-	 * This method calculates and returns the threshold of DFBnB algorithm.
-	 */
-	private static int thresholdDFBnB() {
-		int count = -1;
-		for (int r = 0; r < Dimension.N; r += 1) {
-			for (int c = 0; c < Dimension.M; c += 1) {
-				if (Node.initial.getBoard()[r][c].getColor() == Color.BLACK) {
-					continue;
-				}
-
-				count += 1;
-			}
-		}
-
-		if (count > 12) {
-			return Integer.MAX_VALUE;
-		}
-
-		int threshold = 1;
-		for (int i = 2; i <= count; i += 1) {
-			threshold = threshold * i;
-		}
-
-		return threshold;
 	}
 }

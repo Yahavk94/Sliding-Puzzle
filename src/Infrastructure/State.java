@@ -13,7 +13,7 @@ public class State {
 	protected Point blank;
 
 	/**
-	 * This method constructs a new state.
+	 * This method constructs the initial state.
 	 */
 	protected State() {
 		Initial.initFromFile(this);

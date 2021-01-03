@@ -7,5 +7,5 @@ import Infrastructure.Node;
  */
 
 public interface Solvable {
-	public Node solve(Node initial);
+	public Node solve();
 }

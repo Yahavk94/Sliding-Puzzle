@@ -16,15 +16,15 @@ import Utils.Direction;
 
 public class BFS implements Solvable {
 	@Override
-	public Node solve(Node initial) {
+	public Node solve() {
 		Queue<Node> queue = new LinkedList<>();
-		queue.add(initial);
+		queue.add(Node.INITIAL);
 
 		// All the nodes that are available for expansion
 		Map<String, Node> openList = new HashMap<>();
 
 		// The initial node is available for expansion
-		openList.put(initial.encode(), initial);
+		openList.put(Node.INITIAL.encode(), Node.INITIAL);
 
 		// All the nodes that have been expanded
 		Set<String> closedList = new HashSet<>();

@@ -12,7 +12,7 @@ import Utils.Point;
  */
 
 public class Heuristic {
-	private static final Map<Integer, Point> map = generateMap();
+	private static final Map<Integer, Point> GOAL_MAP = generateMap();
 
 	/**
 	 * This method computes and returns the heuristic evaluation of the specified state.
@@ -23,7 +23,7 @@ public class Heuristic {
 			for (int c = 0; c < Dimension.M; c += 1) {
 				try {
 					int cost = Color.cost(state.getBoard()[r][c].getColor());
-					Point dest = map.get(state.getBoard()[r][c].getData());
+					Point dest = GOAL_MAP.get(state.getBoard()[r][c].getData());
 					manhattan += cost * (Math.abs(dest.getRow() - r) + Math.abs(dest.getCol() - c));
 				}
 

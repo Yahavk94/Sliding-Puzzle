@@ -30,11 +30,9 @@ public class Service {
 			} if (current.getBoard()[blank.getRow()][blank.getCol() + 1].getColor() == Color.BLACK) {
 				return null;
 			}
-
-			return Support.update(new Node(current, direction));
 		}
 
-		if (direction == Direction.U) {
+		else if (direction == Direction.U) {
 			if (current.getDirection() == Direction.D) /* The inverted action is invalid */ {
 				return null;
 			} if (blank.getRow() == Dimension.N - 1) /* Unable to slide up */ {
@@ -42,11 +40,9 @@ public class Service {
 			} if (current.getBoard()[blank.getRow() + 1][blank.getCol()].getColor() == Color.BLACK) {
 				return null;
 			}
-
-			return Support.update(new Node(current, direction));
 		}
 
-		if (direction == Direction.R) {
+		else if (direction == Direction.R) {
 			if (current.getDirection() == Direction.L) /* The inverted action is invalid */ {
 				return null;
 			} if (blank.getCol() == 0) /* Unable to slide right */ {
@@ -54,11 +50,9 @@ public class Service {
 			} if (current.getBoard()[blank.getRow()][blank.getCol() - 1].getColor() == Color.BLACK) {
 				return null;
 			}
-
-			return Support.update(new Node(current, direction));
 		}
 
-		if (direction == Direction.D) {
+		else if (direction == Direction.D) {
 			if (current.getDirection() == Direction.U) /* The inverted action is invalid */ {
 				return null;
 			} if (blank.getRow() == 0) /* Unable to slide down */ {
@@ -66,11 +60,9 @@ public class Service {
 			} if (current.getBoard()[blank.getRow() - 1][blank.getCol()].getColor() == Color.BLACK) {
 				return null;
 			}
-
-			return Support.update(new Node(current, direction));
 		}
 
-		return null;
+		return Support.update(new Node(current, direction));
 	}
 
 	/**
