@@ -47,18 +47,18 @@ public class IDDFS implements Solvable {
 		boolean cutoff = false;
 
 		for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
-			Node node = Service.expand(current, Direction.convert(i));
-			if (node == null) /* Unsafe expansion */ {
+			Node generated = Service.expand(current, Direction.convert(i));
+			if (generated == null) /* Unsafe expansion */ {
 				continue;
 			}
 
 			// A Loop has been detected
-			if (avoidLoops.contains(node.encode())) {
+			if (avoidLoops.contains(generated.encode())) {
 				continue;
 			}
 
 			// Recurse
-			Object result = limitedDFS(node, depth - 1, avoidLoops);
+			Object result = limitedDFS(generated, depth - 1, avoidLoops);
 
 			if (result == Result.CUTOFF) {
 				cutoff = true;

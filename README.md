@@ -14,6 +14,8 @@ This project offers 5 different search algorithms for solving the puzzle, two of
 - For the uninformed search algorithms - the goal is to find a sequence of primitive steps, with a **minimal number of moves** that will lead us from the initial state to the goal state.
 - For the informed search algorithms - the goal is to find a sequence of primitive steps, with a **minimal cost of moves** that will lead us from the initial state to the goal state.
 
+For more information about the search algorithms, please see the wiki page.
+
 ## Installation
 - Fill in the attached input file, according to the given format.
 - Open your IDE.
@@ -23,4 +25,4 @@ This project offers 5 different search algorithms for solving the puzzle, two of
 For more inputs, please open the attached inputs folder.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/Yahavk94/Sliding-Puzzle/blob/master/LICENSE)

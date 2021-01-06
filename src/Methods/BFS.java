@@ -44,13 +44,13 @@ public class BFS implements Solvable {
 			closedList.add(code);
 
 			for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
-				Node node = Service.expand(current, Direction.convert(i));
-				if (node == null) /* Unsafe expansion */ {
+				Node generated = Service.expand(current, Direction.convert(i));
+				if (generated == null) /* Unsafe expansion */ {
 					continue;
 				}
 
 				// Encode the generated node
-				code = node.encode();
+				code = generated.encode();
 
 				// The generated node has already been expanded
 				if (closedList.contains(code)) {
@@ -62,13 +62,13 @@ public class BFS implements Solvable {
 					continue;
 				}
 
-				if (node.isGoal()) /* The goal was found */ {
-					return node;
+				if (generated.isGoal()) /* The goal was found */ {
+					return generated;
 				}
 
 				// The generated node is available for expansion
-				queue.add(node);
-				openList.put(code, node);
+				queue.add(generated);
+				openList.put(code, generated);
 			}
 		}
 

@@ -32,11 +32,11 @@ public class Node extends State implements Comparable<Node> {
 	/**
 	 * This method constructs a new node.
 	 */
-	public Node(Node current, Direction direction) {
-		super(current);
-		weight = current.weight;
+	public Node(Node node, Direction direction) {
+		super(node);
+		weight = node.weight;
 		setDirection(direction);
-		path = current.path;
+		path = node.path;
 	}
 
 	/**
@@ -61,21 +61,21 @@ public class Node extends State implements Comparable<Node> {
 	}
 
 	/**
-	 * This method sets the heuristic evaluation of this node.
+	 * This method sets the heuristic evaluation of this node to the specified heuristic.
 	 */
 	public void setHeuristic(int heuristic) {
 		this.heuristic = heuristic;
 	}
 
 	/**
-	 * This method returns a boolean temporal data which can be used by the algorithms.
+	 * This method returns true if this node is marked.
 	 */
 	public boolean isMarked() {
 		return mark;
 	}
 
 	/**
-	 * This method sets the boolean temporal data which can be used by the algorithms.
+	 * This method sets the mark of this node to the specified mark.
 	 */
 	public void setMark(boolean mark) {
 		this.mark = mark;
@@ -89,7 +89,7 @@ public class Node extends State implements Comparable<Node> {
 	}
 
 	/** 
-	 * This method sets the direction of the expansion of this node.
+	 * This method sets the direction of the expansion of this node to the specified direction.
 	 */
 	private void setDirection(Direction direction) {
 		this.direction = direction;

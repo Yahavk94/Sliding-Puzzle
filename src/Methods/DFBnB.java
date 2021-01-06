@@ -46,16 +46,16 @@ public class DFBnB implements Solvable {
 			List<Node> storage = new ArrayList<>();
 
 			for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
-				Node node = Service.expand(current, Direction.convert(i));
-				if (node == null) /* Unsafe expansion */ {
+				Node generated = Service.expand(current, Direction.convert(i));
+				if (generated == null) /* Unsafe expansion */ {
 					continue;
 				}
 
 				// Set the heuristic value of the generated node
-				node.setHeuristic(Heuristic.manhattanDistance2D(node));
+				generated.setHeuristic(Heuristic.manhattanDistance2D(generated));
 
 				// Store the generated node
-				storage.add(node);
+				storage.add(generated);
 			}
 
 			// Sort the generated nodes in ascending order

@@ -13,39 +13,41 @@ public class Support {
 	/**
 	 * This method updates the generated node.
 	 */
-	protected static Node update(Node node) {
-		Point b = node.getBlank();
+	protected static Node update(Node generated) {
+		Point b = generated.getBlank();
 
 		Point s = null;
-		if (node.getDirection() == Direction.L) {
+		Direction direction = generated.getDirection();
+
+		if (direction == Direction.L) {
 			s = new Point(b.getRow(), b.getCol() + 1);
-		} else if (node.getDirection() == Direction.U) {
+		} else if (direction == Direction.U) {
 			s = new Point(b.getRow() + 1, b.getCol());
-		} else if (node.getDirection() == Direction.R) {
+		} else if (direction == Direction.R) {
 			s = new Point(b.getRow(), b.getCol() - 1);
-		} else if (node.getDirection() == Direction.D) {
+		} else if (direction == Direction.D) {
 			s = new Point(b.getRow() - 1, b.getCol());
 		}
 
-		Tile temp = node.getBoard()[s.getRow()][s.getCol()];
+		Tile temp = generated.getBoard()[s.getRow()][s.getCol()];
 
 		// Update weight
-		node.updateWeight(temp.getColor());
+		generated.updateWeight(temp.getColor());
 
 		// Update path
-		if (node.getPath().isEmpty()) {
-			node.updatePath(temp.getData() + "" + node.getDirection());
+		if (generated.getPath().isEmpty()) {
+			generated.updatePath(temp.getData() + "" + direction);
 		} else {
-			node.updatePath("-" + temp.getData() + node.getDirection());
+			generated.updatePath("-" + temp.getData() + direction);
 		}
 
 		// Perform swap
-		node.getBoard()[s.getRow()][s.getCol()] = node.getBoard()[b.getRow()][b.getCol()];
-		node.getBoard()[b.getRow()][b.getCol()] = temp;
+		generated.getBoard()[s.getRow()][s.getCol()] = generated.getBoard()[b.getRow()][b.getCol()];
+		generated.getBoard()[b.getRow()][b.getCol()] = temp;
 
 		// Update blank
 		b.setLocation(s);
 
-		return node;
+		return generated;
 	}
 }

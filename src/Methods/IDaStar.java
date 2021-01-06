@@ -43,15 +43,15 @@ public class IDaStar implements Solvable {
 				nodes.push(current);
 
 				for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
-					Node node = Service.expand(current, Direction.convert(i));
-					if (node == null) /* Unsafe expansion */ {
+					Node generated = Service.expand(current, Direction.convert(i));
+					if (generated == null) /* Unsafe expansion */ {
 						continue;
 					}
 
 					// Set the heuristic value of the generated node
-					node.setHeuristic(Heuristic.manhattanDistance2D(node));
+					generated.setHeuristic(Heuristic.manhattanDistance2D(generated));
 
-					int fn = node.getWeight() + node.getHeuristic();
+					int fn = generated.getWeight() + generated.getHeuristic();
 					if (fn > threshold) /* Do not exceed the current threshold */ {
 						if (fn < minF) /* Update if necessary */ {
 							minF = fn;
@@ -61,7 +61,7 @@ public class IDaStar implements Solvable {
 					}
 
 					// Encode the generated node
-					String code = node.encode();
+					String code = generated.encode();
 
 					if (avoidLoops.containsKey(code)) {
 						if (avoidLoops.get(code).isMarked()) /* Marked as out */ {
@@ -77,12 +77,12 @@ public class IDaStar implements Solvable {
 						}
 					}
 
-					if (node.isGoal()) /* The goal was found */ {
-						return node;
+					if (generated.isGoal()) /* The goal was found */ {
+						return generated;
 					}
 
-					nodes.push(node);
-					avoidLoops.put(code, node);
+					nodes.push(generated);
+					avoidLoops.put(code, generated);
 				}
 			}
 

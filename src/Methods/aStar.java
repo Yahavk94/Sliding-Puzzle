@@ -52,13 +52,13 @@ public class aStar implements Solvable {
 			closedList.add(code);
 
 			for (int i = 0; i < Service.NUM_OF_OPERATORS; i += 1) /* Generate the next possible nodes */ {
-				Node node = Service.expand(current, Direction.convert(i));
-				if (node == null) /* Unsafe expansion */ {
+				Node generated = Service.expand(current, Direction.convert(i));
+				if (generated == null) /* Unsafe expansion */ {
 					continue;
 				}
 
 				// Encode the generated node
-				code = node.encode();
+				code = generated.encode();
 
 				// The generated node has already been expanded
 				if (closedList.contains(code)) {
@@ -66,21 +66,21 @@ public class aStar implements Solvable {
 				}
 
 				// Set the heuristic value of the generated node
-				node.setHeuristic(Heuristic.manhattanDistance2D(node));
+				generated.setHeuristic(Heuristic.manhattanDistance2D(generated));
 
 				if (!openList.containsKey(code)) /* Added safely */ {
-					queue.add(node);
-					openList.put(code, node);
+					queue.add(generated);
+					openList.put(code, generated);
 					continue;
 				}
 
 				// Check if there is a cheaper path
 				Node similar = openList.get(code);
-				int fn = node.getWeight() + node.getHeuristic();
+				int fn = generated.getWeight() + generated.getHeuristic();
 				if (similar.getWeight() + similar.getHeuristic() > fn) /* A cheaper path */ {
 					queue.remove(similar);
-					queue.add(node);
-					openList.replace(code, node);
+					queue.add(generated);
+					openList.replace(code, generated);
 				}
 			}
 		}

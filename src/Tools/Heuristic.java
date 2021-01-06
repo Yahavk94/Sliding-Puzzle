@@ -12,7 +12,7 @@ import Utils.Point;
  */
 
 public class Heuristic {
-	private static final Map<Integer, Point> GOAL_MAP = generateMap();
+	private static final Map<Integer, Point> GOAL_MAP = generateMap(new HashMap<>());
 
 	/**
 	 * This method computes and returns the heuristic evaluation of the specified state.
@@ -39,8 +39,7 @@ public class Heuristic {
 	/**
 	 * This method returns a mapping of each tile to its location in the goal state.
 	 */
-	private static Map<Integer, Point> generateMap() {
-		Map<Integer, Point> map = new HashMap<>();
+	private static Map<Integer, Point> generateMap(Map<Integer, Point> map) {
 		for (int r = 0; r < Dimension.N; r += 1) {
 			for (int c = 0; c < Dimension.M; c += 1) {
 				if (r * Dimension.M + c + 1 != Dimension.NM) {

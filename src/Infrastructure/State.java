@@ -40,7 +40,7 @@ public class State {
 	}
 
 	/**
-	 * This method returns the location of the blank tile of this state.
+	 * This method returns the blank tile of this state.
 	 */
 	public Point getBlank() {
 		return blank;
